@@ -55,8 +55,8 @@ public class ThreadRace {
 		long totalTime = System.currentTimeMillis() - startTime;
 		System.out.println("总时长: " + totalTime);
 		
-//		SimplePolicy policy = new SimplePolicy();
-		MyPolicy policy = new MyPolicy();
+//		SimplePolicy policy = new SimplePolicy();//注释掉原来的实现
+		MyPolicy policy = new MyPolicy();//自定义实现
 		long totalSimple = policy.go();
 		
 		double rate = totalSimple / (double)totalTime;

@@ -34,14 +34,17 @@ public class MyPolicy {
         genCountDownLatch.await();
         long genTime = System.currentTimeMillis();
         System.out.println("产生随机数时长: " + (genTime - startTime));
+
         int[] top = shareData.getTop();
         int[] cache = new int[top.length];
         int oneShareCount = ShareData.COUNT / computeThreadInPool;
         for (int i = 0; i < computeThreadInPool; i++) {
             int finalI = i;
             computeThreadPool.execute(() -> {
+                //使用分组排序
                 List<Integer> integers = shareData.getScore().subList(finalI * oneShareCount, (finalI + 1) * oneShareCount);
                 Collections.sort(integers, Comparator.reverseOrder());
+                //取出每组中最大的10个数据
                 for (int j = 0; j < 10; j++) {
                     cache[finalI * 10 + j] = integers.get(j);
                 }
@@ -57,7 +60,6 @@ public class MyPolicy {
         printTop(shareData);
         long sortTime = System.currentTimeMillis();
         System.out.println("自定义A方法计算时长: " + (sortTime - genTime));
-
 
         computeThreadPool.shutdown();
         genThreadPool.shutdown();

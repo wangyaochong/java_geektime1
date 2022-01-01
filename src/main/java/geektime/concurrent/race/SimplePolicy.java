@@ -61,7 +61,7 @@ public class SimplePolicy {
 	}
     void printTop() {
     	System.out.println("前10成绩为:");
-    	for (int j = 0; j <= 10; j++) {
+    	for (int j = 0; j < 10; j++) {
     		System.out.print(ssd.getTop()[j] + " ");
     	}
     	System.out.println();

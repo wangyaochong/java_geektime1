@@ -34,6 +34,7 @@ public class ThreadRace {
 
 	public static void main(String[] args) throws Exception {
 
+
 		long startTime = System.currentTimeMillis();
 		System.out.println("开始单线程基准计时: " + startTime);
 		ThreadRace tr = new ThreadRace();
@@ -54,10 +55,11 @@ public class ThreadRace {
 		long totalTime = System.currentTimeMillis() - startTime;
 		System.out.println("总时长: " + totalTime);
 		
-		SimplePolicy sp = new SimplePolicy();
-		long totalSimple = sp.go();
+//		SimplePolicy policy = new SimplePolicy();
+		MyPolicy policy = new MyPolicy();
+		long totalSimple = policy.go();
 		
-		double rate = totalSimple / totalTime;
+		double rate = totalSimple / (double)totalTime;
 		System.out.println("自定义A和基准比较: " + new Double(rate).toString());
 	}
 	
@@ -80,7 +82,7 @@ public class ThreadRace {
     
     void printTop() {
     	System.out.println("前10成绩为:");
-    	for (int j = 0; j <= 10; j++) {
+    	for (int j = 0; j < 10; j++) {
     		System.out.print(bsd.getTop()[j] + " ");
     	}
     	System.out.println();

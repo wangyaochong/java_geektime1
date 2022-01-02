@@ -23,10 +23,12 @@ public class MyPolicy {
 
         for (int i = 0; i < genThreadInPool; i++) {
             genThreadPool.execute(() -> {
+                List<Integer> list = new ArrayList<>();//使用缓存列表，防止添加的时候锁冲突
                 for (int j = 0; j < ShareData.COUNT / genThreadInPool; j++) {
-                    synchronized (score) {
-                        score.add(rand.nextInt(SimpleShareData.COUNT));
-                    }
+                        list.add(rand.nextInt(SimpleShareData.COUNT));
+                }
+                synchronized (score){//一次批量添加
+                    score.addAll(list);
                 }
                 genCountDownLatch.countDown();
             });
